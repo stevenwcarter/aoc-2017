@@ -10,25 +10,22 @@ pub fn solve(input: &str, part2: bool) -> Option<u64> {
     let mut steps: u64 = 0;
 
     loop {
-        let jump = values.get(index).copied();
-        if jump.is_none() {
+        if let Some(jump) = values.get(index).copied() {
+            if part2 && jump >= 3 {
+                values[index] -= 1;
+            } else {
+                values[index] += 1;
+            }
+
+            match index.checked_add_signed(jump) {
+                None => return Some(steps),
+                Some(idx) => index = idx,
+            }
+
+            steps += 1;
+        } else {
             return Some(steps);
         }
-        let jump = jump.unwrap();
-        if part2 && jump >= 3 {
-            values[index] -= 1;
-        } else {
-            values[index] += 1;
-        }
-
-        let result = index.checked_add_signed(jump);
-        if result.is_none() {
-            return Some(steps);
-        } else {
-            index = result.unwrap();
-        }
-
-        steps += 1;
     }
 }
 
