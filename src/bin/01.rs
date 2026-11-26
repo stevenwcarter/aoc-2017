@@ -1,15 +1,15 @@
 advent_of_code::solution!(1);
+use itertools::Itertools;
 
 pub fn part_one(input: &str) -> Option<u64> {
     let digits: Vec<u8> = input.trim().chars().map(|c| c as u8 - b'0').collect();
 
-    let final_comparison = vec![*digits.last().unwrap(), *digits.first().unwrap()];
     Some(
         digits
-            .windows(2)
-            .chain(std::iter::once(final_comparison.as_slice()))
-            .filter(|v| v[0] == v[1])
-            .map(|n| n[0] as u64)
+            .iter()
+            .circular_tuple_windows()
+            .filter(|(a, b)| a == b)
+            .map(|(a, _)| *a as u64)
             .sum(),
     )
 }
