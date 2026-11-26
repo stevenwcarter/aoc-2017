@@ -2,13 +2,6 @@ use hashbrown::HashMap;
 
 advent_of_code::solution!(8);
 
-// b inc 5 if a > 1
-// a inc 1 if b < 5
-// c dec -10 if a >= 1
-// c inc -20 if c == 10
-// <=
-// !=
-
 pub fn check_conditional(a: i32, conditional: &str, b: i32) -> bool {
     match conditional {
         ">" => a > b,
